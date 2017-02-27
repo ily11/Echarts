@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>报告概述柱状图</title>
+    <script src="script/echarts.min.js"></script>
+    <script src="script/macarons.js"></script>
+</head>
+<body>
+<div id="main" style="width: 1000px;height:400px;"></div>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'),'macarons');
+    myChart.title='堆叠柱状图';
+    var barMaxWidth=45;
+
+    var option={
+        tooltip:{
+            trigger:'axis',
+            axisPointer:{
+                type:'shadow'
+            },
+            formatter: '{a0}: {c0}(+{c1})<br />{a2}: {c2}(+{c3})<br />{a4}: {c4}(+{c5})<br />{a6}: {c6}(+{c7})<br />{a8}: {c8}(+{c9})<br />{a10}: {c10}(+{c11})<br />{a12}: {c12}<br />'
+        },
+        legend:{
+            data:['渠道数量','正版App','二次打包App','盗版App','钓鱼App','独立包','版本','增加数量']
+        },
+        grid:{
+            left:'3%',
+            right:'4%',
+            bottom:'10%',
+            containLabel:true
+        },
+        dataZoom: {
+            type: 'slider',
+            show: 'true',
+            start : '0',
+            end : '50'
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: false, readOnly: false},
+                magicType : {show: true, type: ['bar','line']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : false,
+        xAxis:[{
+            type:'category',
+            data:['酷狗音乐','网易云音乐','百度音乐','多米音乐','咪咕音乐','千千静听','QQ音乐','虾米音乐']
+        }],
+        yAxis:[
+            {
+                type:'value'
+            }
+        ],
+        series:[
+            {
+                name:'渠道数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'渠道',
+                data:[114,114,102,17,88,41,147,20]
+            },
+            {
+                name:'增加数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'渠道',
+                label: {
+                    normal: {
+                        show:true,
+                        formatter: function (params) {
+                            for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                if (option.xAxis[0].data[i] == params.name) {
+                                    //console.log(option.series[0].data[i]);
+                                    return option.series[0].data[i] + params.value;
+                                }
+                            }
+                        },
+                        position: 'top'
+                    }
+                },
+                data:[6,6,12,92,8,3,4,82]
+
+            },
+            {
+                name:'正版App',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'正版',
+                data:[287,285,223,20,127,56,466,30]
+            },
+            {
+                name:'增加数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'正版',
+                label: {
+                    normal: {
+                        show:true,
+                        formatter: function (params) {
+                            for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                if (option.xAxis[0].data[i] == params.name) {
+                                    console.log(option.series[2].data[i]);
+                                    return option.series[2].data[i] + params.value;
+                                }
+                            }
+                        },
+                        position: 'top'
+                    }
+                },
+                data:[49,12,28,203,17,6,41,239]
+            },
+            {
+                name:'二次打包App',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'二次打包',
+                data:[36,20,19,0,2,2,72,0]
+            },
+            {
+                name:'增加数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'二次打包',
+                label: {
+                    normal: {
+                        show:true,
+                        formatter: function (params) {
+                            for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                if (option.xAxis[0].data[i] == params.name) {
+                                    console.log(option.series[4].data[i]);
+                                    return option.series[4].data[i] + params.value;
+                                }
+                            }
+                        },
+                        position: 'top'
+                    }
+                },
+                data:[3,1,2,2,0,0,0,0]
+            },
+            {
+                name:'盗版App',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'盗版',
+                data:[1,0,0,0,0,0,24,0]
+            },
+            {
+                name:'增加数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'盗版',
+                label: {
+                    normal: {
+                        show:true,
+                        formatter: function (params) {
+                            for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                if (option.xAxis[0].data[i] == params.name) {
+                                    console.log(option.series[6].data[i]);
+                                    return option.series[6].data[i] + params.value;
+                                }
+                            }
+                        },
+                        position: 'top'
+                    }
+                },
+                data:[0,0,0,1,0,0,0,0]
+            },
+            {
+                name:'钓鱼App',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'钓鱼',
+                data:[1,1,1,0,6,0,29,1]
+            },
+            {
+                name:'增加数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'钓鱼',
+                label: {
+                    normal: {
+                        show:true,
+                        formatter: function (params) {
+                            for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                if (option.xAxis[0].data[i] == params.name) {
+                                    console.log(option.series[8].data[i]);
+                                    return option.series[8].data[i] + params.value;
+                                }
+                            }
+                        },
+                        position: 'top'
+                    }
+                },
+                data:[0,0,0,1,0,0,1,0]
+            },
+            {
+                name:'独立包',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'独立包',
+                data:[169,160,129,6,108,14,184,19]
+            },
+            {
+                name:'增加数量',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'独立包',
+                label: {
+                    normal: {
+                        show:true,
+                        formatter: function (params) {
+                            for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                if (option.xAxis[0].data[i] == params.name) {
+                                    console.log(option.series[10].data[i]);
+                                    return option.series[10].data[i] + params.value;
+                                }
+                            }
+                        },
+                        position: 'top'
+                    }
+                },
+                data:[20,5,8,105,8,0,25,152]
+            },
+            {
+                name:'版本',
+                type:'bar',
+                barMaxWidth:barMaxWidth,
+                stack:'版本',
+                data:[63,61,50,48,27,2,56,75]
+            }
+        ]
+    }
+    myChart.setOption(option);
+</script>
+</body>
+</html>

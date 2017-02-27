@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>版本分布图</title>
+    <script src="script/echarts.min.js"></script>
+    <script src="script/macarons.js"></script>
+</head>
+<body>
+<div id="main" style="width: 1000px;height:400px;"></div>
+<script>
+    var myChart=echarts.init(document.getElementById('main'),'macarons');
+    myChart.title="xx版本分布图";
+    //初始化数据：
+    var data=[
+        {appId:'1',appName:'音乐',channelNum:'3',version:'V6.8.3'},
+        {appId:'1',appName:'音乐',channelNum:'6',version:'2.6.98'},
+        {appId:'1',appName:'音乐',channelNum:'1',version:'2.6.96'},
+        {appId:'1',appName:'音乐',channelNum:'6',version:'V6.11.8'},
+        {appId:'1',appName:'音乐',channelNum:'1',version:'V6.7.0'},
+        {appId:'1',appName:'音乐',channelNum:'3',version:'2.8.0'},
+        {appId:'1',appName:'音乐',channelNum:'2',version:'2.6.2'},
+        {appId:'1',appName:'音乐',channelNum:'2',version:'2.8.1'},
+        {appId:'1',appName:'音乐',channelNum:'2',version:'V6.10.6'},
+        {appId:'1',appName:'音乐',channelNum:'2',version:'V6.10.7'},
+        {appId:'1',appName:'音乐',channelNum:'3',version:'6.12.0.303'},
+        {appId:'1',appName:'音乐',channelNum:'2',version:'V6.4.14'},
+        {appId:'1',appName:'音乐',channelNum:'5',version:'2.8.2'},
+        {appId:'1',appName:'音乐',channelNum:'20',version:'6.13.0.301'},
+        {appId:'1',appName:'音乐',channelNum:'6',version:'V6.9.9'},
+        {appId:'1',appName:'音乐',channelNum:'1',version:'V6.5.81'},
+        {appId:'1',appName:'音乐',channelNum:'1',version:'V6.3.81'},
+        {appId:'1',appName:'音乐',channelNum:'1',version:'6.13.0.304'},
+        {appId:'1',appName:'音乐',channelNum:'1',version:'V6.5.82'}
+    ];
+    var channelNum=[];
+    var versions=[];
+
+    var app_id=data[0].appId;
+    var app_names=data[0].appName;
+    for(var i=0;i<data.length-1;i++){//最后一个没有数据
+        //channelNum[i]=data[i].channelName.split(',').length;
+        channelNum[i]=data[i].channelNum;
+        versions[i]=data[i].version;
+    }
+    var showdata=[];
+    for(var i=0;i<data.length-1;i++){
+        showdata.push({
+            value:channelNum[i],
+            name:versions[i]
+        });
+    }
+    console.log(showdata);
+    var option = {
+        title : {
+            text: app_names+'版本分布图',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "版本：{b} <br/> 渠道个数 : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom',
+            data:versions
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: false, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'bar']
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : false,
+        series : [
+            {
+                name:'版本的渠道个数分布',
+                type:'pie',
+                radius : [30, 110],
+                roseType : 'area',
+                label: {
+                    normal: {
+                        formatter: '{b}({d}%)'
+                    }
+
+                },
+                x: '25%',
+                width: '50%',// for funnel
+                max: 40,                // for funnel
+                sort : 'ascending',     // for funnel
+                data:showdata
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+
+</script>
+</body>
+</html>
